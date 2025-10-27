@@ -1,14 +1,14 @@
+import picocolors from "picocolors";
 import type { BrowserContext, Page } from "playwright-core";
+import { sleep } from "./sleep";
 
 // Increase max retries for CI environments
 const MAX_RETRIES = 20;
 // Add delay between retries
-const RETRY_DELAY_BASE = 1000;
+const RETRY_DELAY_BASE = 6000;
 // Initial delay to ensure browser is fully initialized
-const INITIAL_BROWSER_DELAY = 1000;
+const INITIAL_BROWSER_DELAY = 3000;
 // Polling interval for finding extension page
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
  * Finds an extension page in the current browser context
@@ -70,7 +70,7 @@ export async function waitForExtensionOnLoadPage(context: BrowserContext, wallet
         }
     }
 
-    console.info("Extension page is properly loaded and ready");
+    console.info(picocolors.greenBright("✅ Extension page is properly loaded and ready"));
     // biome-ignore lint/style/noNonNullAssertion: this is intentional
     return _extensionPage!;
 }

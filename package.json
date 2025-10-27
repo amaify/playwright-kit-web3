@@ -10,10 +10,10 @@
     ],
     "scripts": {
         "build": "tsup",
-        "dev": "tsx src/cli/index.ts setup-wallet"
+        "dev": "tsx src/cli/index.ts setup-wallet -a"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.3.0",
+        "@biomejs/biome": "2.3.1",
         "@types/adm-zip": "^0.5.7",
         "@types/cli-progress": "^3.11.6",
         "@types/node": "^24.9.1",
