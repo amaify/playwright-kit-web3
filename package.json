@@ -31,5 +31,8 @@
         "playwright-core": "^1.56.1",
         "rimraf": "^6.0.1",
         "zod": "^4.1.12"
+    },
+    "overrides": {
+        "@rollup/rollup-win32-arm64-msvc": "^4.52.5"
     }
 }
