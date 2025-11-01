@@ -52,6 +52,9 @@ export async function downloadFile({ url, destination }: DownloadFileArgs) {
                 resolve(void 0);
             });
         });
+    } catch (error) {
+        console.error(picocolors.redBright(`❌ Download failed: ${error}`));
+        process.exit(1);
     } finally {
         clearTimeout(requestTimeout);
     }

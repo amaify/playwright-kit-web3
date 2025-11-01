@@ -7,7 +7,7 @@ const MAX_RETRIES = 20;
 // Add delay between retries
 const RETRY_DELAY_BASE = 6000;
 // Initial delay to ensure browser is fully initialized
-const INITIAL_BROWSER_DELAY = 3000;
+const INITIAL_BROWSER_DELAY = 4000;
 // Polling interval for finding extension page
 
 /**

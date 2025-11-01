@@ -44,11 +44,11 @@ export async function triggerCacheCreation({ walletName, force, walletProfile, f
                 ),
             ].join("\n"),
         );
-        process.exit(1);
+        process.exit(0);
     }
 
     if (fs.existsSync(userDataDir)) {
-        process.exit(1);
+        process.exit(0);
     }
 
     const context = await chromium.launchPersistentContext(userDataDir, {

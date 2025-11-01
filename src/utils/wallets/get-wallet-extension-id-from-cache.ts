@@ -3,9 +3,9 @@ import path from "node:path";
 import type { SupportedWallets } from "@/types";
 import getCacheDirectory from "../get-cache-directory";
 
-export async function getExtensionIdFromCache(walletName: SupportedWallets) {
+export async function getWalletExtensionIdFromCache(walletName: SupportedWallets) {
     const cachedDirectory = getCacheDirectory(walletName);
-    const extensionIdText = path.join(cachedDirectory, "extension-id.txt");
+    const extensionIdText = path.resolve(cachedDirectory, "extension-id.txt");
 
     try {
         if (!fs.existsSync(extensionIdText)) {
