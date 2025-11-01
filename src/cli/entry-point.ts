@@ -77,23 +77,36 @@ export async function clientEntry() {
 
             if (flags.headless) process.env.HEADLESS = true;
 
-            const setFunctionHashes = await getSetupFunction({
+            const _setupFunction = await getSetupFunction({
                 walletSetupDir,
                 selectedWallet: response,
             });
 
-            for (const { walletName, walletProfile, setupFunction, fileList } of setFunctionHashes) {
-                await triggerCacheCreation({
-                    walletName: walletName as SupportedWallets,
-                    force: flags.force,
-                    setupFunction,
-                    walletProfile,
-                    fileList,
-                });
+            for (const { walletName, walletProfile, setupFunction, fileList } of _setupFunction) {
+                try {
+                    console.info(pc.cyanBright(`\nSetting up cache for ${walletName}...`));
+                    await triggerCacheCreation({
+                        walletName: walletName as SupportedWallets,
+                        walletProfile,
+                        setupFunction,
+                        fileList,
+                        force: flags.force,
+                    });
+                } catch (error) {
+                    if ((error as Error).message.includes("directory already exists")) {
+                        console.warn((error as Error).message);
+                    }
+
+                    if (!(error as Error).message.includes("directory already exists")) {
+                        console.error(
+                            pc.redBright(`❌  Failed to setup cache for ${walletName}: ${(error as Error).message}`),
+                        );
+                    }
+                }
             }
         });
 
     await program.parseAsync(process.argv);
 }
 
-clientEntry().catch((error) => console.error("Error: ", error));
+clientEntry().catch((error) => console.error("Failed to run the CLI: ", (error as Error).message));

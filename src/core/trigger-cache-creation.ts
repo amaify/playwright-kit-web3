@@ -35,16 +35,22 @@ export async function triggerCacheCreation({ walletName, force, walletProfile, f
     const browserArgs = [`--disable-extensions-except=${extensionPath}`, `--load-extension=${extensionPath}`];
 
     if (fs.existsSync(userDataDir) && fileList.length > 1) {
-        console.error(
+        throw Error(
             [
-                `❌ ${walletProfileDir} directory already exists for ${extensionName}.`,
-                `To setup another profile, please add the profile name to the wallet setup function.`,
                 picocolors.yellowBright(
-                    `Example: defineWalletSetup(async ({ context, walletPage }) => { ... }, "profile-name");`,
+                    [
+                        `❌ ${walletProfileDir} directory already exists for ${extensionName}.`,
+                        `\n To setup another wallet profile, add a profile name to the wallet setup function.`,
+                        picocolors.blueBright(
+                            picocolors.italic(
+                                `Example: defineWalletSetup(async ({ context, walletPage }) => { ... }, "profile-name");`,
+                            ),
+                        ),
+                        picocolors.italic(`You can also use the --force flag to overwrite the existing cache.`),
+                    ].join("\n"),
                 ),
             ].join("\n"),
         );
-        process.exit(0);
     }
 
     if (fs.existsSync(userDataDir)) {

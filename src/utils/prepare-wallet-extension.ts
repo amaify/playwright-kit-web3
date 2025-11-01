@@ -50,7 +50,9 @@ export async function prepareWalletExtension({ downloadUrl, name, force }: Args)
         console.info(`✅ ${walletName} Extension extracted successfully.`);
     } else {
         console.info(
-            picocolors.yellow(`⚠️ ${walletName}: Cache already exists for ${outputPath}. Using cached version.`),
+            picocolors.yellow(
+                `⚠️ Skipping ${walletName} cache creation: Cache already exists at ${outputPath}. Use --force to overwrite.`,
+            ),
         );
     }
 
