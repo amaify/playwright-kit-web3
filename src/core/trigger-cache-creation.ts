@@ -43,7 +43,7 @@ export async function triggerCacheCreation({ walletName, force, walletProfile, f
                         `\n To setup another wallet profile, add a profile name to the wallet setup function.`,
                         picocolors.blueBright(
                             picocolors.italic(
-                                `Example: defineWalletSetup(async ({ context, walletPage }) => { ... }, "profile-name");`,
+                                `Example: defineWalletSetup(async ({ context, walletPage }) => { ... }, { profileName: "profile-name" });`,
                             ),
                         ),
                         picocolors.italic(`You can also use the --force flag to overwrite the existing cache.`),

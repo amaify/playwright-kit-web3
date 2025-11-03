@@ -11,7 +11,7 @@ vi.mock("glob", () => ({
 }));
 
 describe("getSetupFunction", () => {
-    const WALLET_SETUP_DIR = path.resolve(process.cwd(), "src/core/wallet-setup-test-files");
+    const WALLET_SETUP_DIR = path.resolve(process.cwd(), "src/core/test/wallet-setup-test-files");
 
     beforeAll(() => {
         const setupFiles = ["metamask.setup.ts", "metamask-two.setup.ts", "phantom.setup.ts", "solflare.setup.ts"];
@@ -29,7 +29,7 @@ describe("getSetupFunction", () => {
                         export default defineWalletSetup(async () => {
                             console.info("Setting up ${filename}.....");
                             return void 0;
-                        }, ${filename === "metamask-two.setup.ts" ? "'profile-two'" : undefined});
+                        }, ${filename === "metamask-two.setup.ts" ? '{ profileName: "profile-two" }' : undefined});
                         `.trim(),
                     );
                 }
@@ -132,7 +132,7 @@ describe("getSetupFunction", () => {
 
         expect(result).toHaveLength(1);
         expect(result[0]).toHaveProperty("walletName", "metamask");
-        expect(result[0]).toHaveProperty("walletProfile", "profile-two");
+        expect(result[0]).toHaveProperty(["walletProfile"], "profile-two");
         expect(result[0]).toHaveProperty("setupFunction");
     });
 

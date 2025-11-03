@@ -48,9 +48,14 @@ export default async function getSetupFunction({ walletSetupDir, selectedWallet 
         _fileList.map(async ({ filePath, walletName }) => {
             const importUrl = new URL(pathToFileURL(filePath)).href;
             const setupFunction = (await import(importUrl).then((module) => module.default)) as SetupFunction;
-            const { fn, walletProfile } = setupFunction;
+            const { fn, config } = setupFunction;
 
-            return { walletName, setupFunction: fn, walletProfile: walletProfile ?? undefined, fileList: _fileList };
+            return {
+                walletName,
+                setupFunction: fn,
+                walletProfile: config.profileName ?? undefined,
+                fileList: _fileList,
+            };
         }),
     );
 

@@ -1,5 +1,9 @@
 import type { WalletSetupFunction } from "@/types";
 
-export default async function defineWalletSetup(fn: WalletSetupFunction, walletProfile?: string) {
-    return { fn, walletProfile };
+type WalletSetupConfig = {
+    profileName?: string;
+};
+
+export default async function defineWalletSetup(fn: WalletSetupFunction, config: WalletSetupConfig = {}) {
+    return { fn, config };
 }
