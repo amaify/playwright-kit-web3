@@ -3,7 +3,7 @@ import path from "node:path";
 import { glob } from "glob";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { CLIOptions } from "@/types";
-import getSetupFunction from "./get-setup-function";
+import getSetupFunction from "../get-setup-function";
 
 // Mock glob
 vi.mock("glob", () => ({
@@ -25,11 +25,11 @@ describe("getSetupFunction", () => {
                         path.resolve(WALLET_SETUP_DIR, filename),
                         `
                         import defineWalletSetup from "@/core/define-wallet-setup";
-    
+
                         export default defineWalletSetup(async () => {
                             console.info("Setting up ${filename}.....");
                             return void 0;
-                        }, ${filename === "metamask-two.setup.ts" ? "'profile-two'" : undefined}); 
+                        }, ${filename === "metamask-two.setup.ts" ? "'profile-two'" : undefined});
                         `.trim(),
                     );
                 }

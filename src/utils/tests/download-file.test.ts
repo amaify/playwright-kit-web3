@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { Readable } from "node:stream";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
-import { downloadFile } from "./download-file";
+import { downloadFile } from "../download-file";
 
 // Mock cli-progress
 const createMockProgressBar = () => ({

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import extractWalletNameFromPath from "./extract-wallet-name-from-path";
+import extractWalletNameFromPath from "../extract-wallet-name-from-path";
 
 describe("extractWalletNameFromPath", () => {
     it("should extract the wallet name from the file path", () => {

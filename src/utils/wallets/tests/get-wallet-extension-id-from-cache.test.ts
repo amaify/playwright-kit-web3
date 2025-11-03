@@ -2,15 +2,15 @@ import fs from "node:fs";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { CLIOptions } from "@/types";
-import { getWalletExtensionIdFromCache } from "./get-wallet-extension-id-from-cache";
+import { getWalletExtensionIdFromCache } from "../get-wallet-extension-id-from-cache";
 
 vi.mock("@/utils/get-cache-directory", () => ({
     default: (walletName: CLIOptions) =>
-        path.resolve(process.cwd(), `src/utils/wallets/.test-wallet-cache/${walletName}`),
+        path.resolve(process.cwd(), `src/utils/wallets/tests/.test-wallet-cache/${walletName}`),
 }));
 
 describe("Get wallet extension ID from cache", () => {
-    const CACHE_ROOT = path.resolve(process.cwd(), "src/utils/wallets/.test-wallet-cache");
+    const CACHE_ROOT = path.resolve(process.cwd(), "src/utils/wallets/tests/.test-wallet-cache");
     const CACHE_DIR = path.resolve(CACHE_ROOT, "petra");
 
     beforeAll(() => {
@@ -21,11 +21,11 @@ describe("Get wallet extension ID from cache", () => {
     });
 
     afterAll(() => {
-        fs.rm(CACHE_ROOT, { force: true, recursive: true }, (error) => {
-            if (error) {
-                console.error("Error deleting wallet cache directory: ", error);
-            }
-        });
+        fs.rmSync(CACHE_ROOT, { force: true, recursive: true });
+    });
+
+    afterEach(() => {
+        vi.clearAllMocks();
     });
 
     it("should return the extension ID from the cache", async () => {

@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { CLIOptions } from "@/types";
-import { getWalletExtensionPathFromCache } from "./get-wallet-extension-path-from-cache";
+import { getWalletExtensionPathFromCache } from "../get-wallet-extension-path-from-cache";
 
 vi.mock("@/utils/get-cache-directory", () => ({
     default: (walletName: CLIOptions) =>
@@ -22,11 +22,11 @@ describe("Get wallet extension path from cache", () => {
     });
 
     afterAll(() => {
-        fs.rm(CACHE_ROOT, { force: true, recursive: true }, (error) => {
-            if (error) {
-                console.error("Error deleting wallet cache directory: ", error);
-            }
-        });
+        fs.rmSync(CACHE_ROOT, { force: true, recursive: true });
+    });
+
+    afterEach(() => {
+        vi.clearAllMocks();
     });
 
     it("should return the extension path from the cache", async () => {

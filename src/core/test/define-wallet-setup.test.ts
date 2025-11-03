@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import defineWalletSetup from "./define-wallet-setup";
+import defineWalletSetup from "../define-wallet-setup";
 
 describe("defineWalletSetup", () => {
     it("should define a wallet setup function with a profile name", async () => {
