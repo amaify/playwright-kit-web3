@@ -11,7 +11,7 @@ export class Metamask {
         this.page = page;
     }
 
-    async onboard({ mode, password, secretRecoveryPhrase }: OnboardingArgs) {
-        await onboard({ page: this.page, mode, password, secretRecoveryPhrase });
+    async onboard(args: OnboardingArgs) {
+        await onboard({ page: this.page, ...args });
     }
 }

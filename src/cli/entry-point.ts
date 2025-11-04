@@ -58,11 +58,11 @@ export async function clientEntry() {
                 ? await select({
                       message: "Select the wallet you want to setup",
                       choices: [
+                          { name: "All", value: "all" },
                           { name: "MetaMask", value: "metamask" },
-                          { name: "Solflare", value: "solflare" },
                           { name: "Petra", value: "petra" },
                           { name: "Phantom", value: "phantom" },
-                          { name: "All", value: "all" },
+                          { name: "Solflare", value: "solflare" },
                       ],
                       loop: false,
                       pageSize: 10,

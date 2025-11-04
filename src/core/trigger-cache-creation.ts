@@ -64,6 +64,8 @@ export async function triggerCacheCreation({ walletName, force, config, fileList
         slowMo: config?.slowMo ?? 0,
     });
 
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+
     console.info(picocolors.magentaBright(`🧩🚀 Starting Chrome extension for ${walletName.toUpperCase()}`));
     const walletPage = await waitForExtensionOnLoadPage(context, walletName);
 

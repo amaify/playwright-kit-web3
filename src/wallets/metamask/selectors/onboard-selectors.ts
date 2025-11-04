@@ -6,4 +6,13 @@ export const onboardSelectors = {
     confirmNewPasswordInput: "create-password-confirm-input",
     confirmPasswordCheckbox: "create-password-terms",
     createPasswordButton: "create-password-submit",
+    revealSecretRecoveryPhraseButton: "recovery-phrase-reveal",
+    recoveryPhraseRemindMeLaterButton: "recovery-phrase-remind-later",
+    metamaskMetricsIAgreeButton: "metametrics-i-agree",
+    onboardingDoneButton: "onboarding-complete-done",
+
+    // Via Secret Recovery Phrase
+    importUsingSecretRecoveryPhraseButton: "onboarding-import-with-srp-button",
+    secretRecoveryPhraseTextAreaInput: "srp-input-import__srp-note",
+    importWalletConfirmButton: "import-srp-confirm",
 };

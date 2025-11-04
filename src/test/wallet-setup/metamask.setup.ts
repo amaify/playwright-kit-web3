@@ -1,10 +1,15 @@
 import defineWalletSetup from "@/core/define-wallet-setup";
 import { Metamask } from "@/wallets/metamask/metamask";
 
-export default defineWalletSetup(async ({ walletPage }) => {
-    const metamask = new Metamask(walletPage);
+export default defineWalletSetup(
+    async ({ walletPage }) => {
+        const metamask = new Metamask(walletPage);
 
-    await metamask.onboard({ mode: "create", password: "test1234" });
+        const seedPhrase = "slam razor near morning edge across provide sting section bind soup differ";
 
-    return void 0;
-});
+        await metamask.onboard({ mode: "import", password: "test1234", secretRecoveryPhrase: seedPhrase });
+
+        return void 0;
+    },
+    { slowMo: 1_500 },
+);
