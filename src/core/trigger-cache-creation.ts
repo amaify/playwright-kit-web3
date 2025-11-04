@@ -13,11 +13,19 @@ type Args = {
     walletName: SupportedWallets;
     force: boolean;
     setupFunction: WalletSetupFunction;
+    walletPassword: string;
     fileList: GetSetupFunctionFileList[];
     config?: WalletSetupConfig;
 };
 
-export async function triggerCacheCreation({ walletName, force, config, fileList, setupFunction }: Args) {
+export async function triggerCacheCreation({
+    walletName,
+    force,
+    config,
+    fileList,
+    setupFunction,
+    walletPassword,
+}: Args) {
     const { downloadUrl, extensionName } = SUPPORTED_WALLETS[walletName];
     const CACHE_DIR_NAME = getCacheDirectory(walletName);
     const walletProfile = config?.profileName;
@@ -25,6 +33,7 @@ export async function triggerCacheCreation({ walletName, force, config, fileList
     const walletProfileDir = walletProfile ? `${walletProfile}` : `wallet-data`;
     const extensionIdPathTxt = path.resolve(CACHE_DIR_NAME, "extension-id.txt");
     const extensionPathTxt = path.resolve(CACHE_DIR_NAME, "extension-path.txt");
+    const passwordTxt = path.resolve(CACHE_DIR_NAME, "password.txt");
     const userDataDir = path.join(CACHE_DIR_NAME, walletProfileDir);
 
     const extensionPath = await prepareWalletExtension({
@@ -79,6 +88,9 @@ export async function triggerCacheCreation({ walletName, force, config, fileList
         // // Save extension path to disk
         fs.writeFileSync(extensionPathTxt, extensionPath, "utf-8");
         console.info(picocolors.blueBright(`📁 Saved extension Path to: ${extensionPathTxt}`));
+
+        fs.writeFileSync(passwordTxt, walletPassword, "utf-8");
+        console.info(picocolors.yellowBright(`🔑 Saved ${walletName} password to: ${passwordTxt}`));
     }
 
     await setupFunction({ context, walletPage });

@@ -82,7 +82,7 @@ export async function clientEntry() {
                 selectedWallet: response,
             });
 
-            for (const { walletName, config, setupFunction, fileList } of _setupFunction) {
+            for (const { walletName, config, walletPassword, setupFunction, fileList } of _setupFunction) {
                 try {
                     console.info(pc.cyanBright(`\nSetting up cache for ${walletName}...`));
                     await triggerCacheCreation({
@@ -91,6 +91,7 @@ export async function clientEntry() {
                         setupFunction,
                         fileList,
                         force: flags.force,
+                        walletPassword: walletPassword,
                     });
                 } catch (error) {
                     if ((error as Error).message.includes("directory already exists")) {

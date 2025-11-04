@@ -7,6 +7,7 @@ import getPageFromContext from "@/utils/get-page-from-context";
 import persistLocalStorage from "@/utils/persist-local-storage";
 import { removeTempContextDir } from "@/utils/remove-temp-context-directory";
 import { getWalletExtensionPathFromCache } from "@/utils/wallets/get-wallet-extension-path-from-cache";
+import { getWalletPasswordFromCache } from "@/utils/wallets/get-wallet-password-from-cache";
 import { MetamaskProfile } from "./metamask";
 
 export type MetamaskFixture = {
@@ -22,6 +23,7 @@ export const metamaskFixture = (slowMo: number = 0, profileName?: string) =>
 
             const CACHE_DIR = getCacheDirectory(wallet.name);
             const extensionPath = await getWalletExtensionPathFromCache(wallet.name);
+            const password = await getWalletPasswordFromCache(wallet.name);
             const walletDataDir = path.resolve(CACHE_DIR, profileName ?? "wallet-data");
             const contextPath = createTempContextDirectory(testInfo.testId, wallet.name);
 

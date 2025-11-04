@@ -26,11 +26,11 @@ describe("getSetupFunction", () => {
                         `
                         import defineWalletSetup from "@/core/define-wallet-setup";
 
-                        export default defineWalletSetup(async () => {
+                        export default defineWalletSetup("test1234", async () => {
                             console.info("Setting up ${filename}.....");
                             return void 0;
                         }, ${filename === "metamask-two.setup.ts" ? '{ profileName: "profile-two" }' : undefined});
-                        `.trim(),
+                        `,
                     );
                 }
             });
