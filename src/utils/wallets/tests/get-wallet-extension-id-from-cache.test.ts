@@ -9,25 +9,26 @@ vi.mock("@/utils/get-cache-directory", () => ({
         path.resolve(process.cwd(), `src/utils/wallets/tests/.test-wallet-cache/${walletName}`),
 }));
 
+const CACHE_ROOT = path.resolve(process.cwd(), "src/utils/wallets/tests/.test-wallet-cache");
+const CACHE_DIR = path.resolve(CACHE_ROOT, "petra");
+
+beforeAll(() => {
+    if (!fs.existsSync(CACHE_DIR)) {
+        fs.mkdirSync(CACHE_DIR, { recursive: true });
+        fs.writeFileSync(path.resolve(CACHE_DIR, "extension-id.txt"), "nacmplfodgmlifcimbokhbinifgmgceh");
+    }
+});
+
+afterAll(() => {
+    fs.rmSync(CACHE_ROOT, { force: true, recursive: true });
+    vi.resetModules();
+});
+
+afterEach(() => {
+    vi.clearAllMocks();
+});
+
 describe("Get wallet extension ID from cache", () => {
-    const CACHE_ROOT = path.resolve(process.cwd(), "src/utils/wallets/tests/.test-wallet-cache");
-    const CACHE_DIR = path.resolve(CACHE_ROOT, "petra");
-
-    beforeAll(() => {
-        if (!fs.existsSync(CACHE_DIR)) {
-            fs.mkdirSync(CACHE_DIR, { recursive: true });
-            fs.writeFileSync(path.resolve(CACHE_DIR, "extension-id.txt"), "nacmplfodgmlifcimbokhbinifgmgceh");
-        }
-    });
-
-    afterAll(() => {
-        fs.rmSync(CACHE_ROOT, { force: true, recursive: true });
-    });
-
-    afterEach(() => {
-        vi.clearAllMocks();
-    });
-
     it("should return the extension ID from the cache", async () => {
         const extensionId = await getWalletExtensionIdFromCache("petra");
         expect(extensionId).toBe("nacmplfodgmlifcimbokhbinifgmgceh");

@@ -9,21 +9,21 @@ vi.mock("@/utils/get-cache-directory", () => ({
         path.resolve(process.cwd(), `src/utils/wallets/tests/.test-wallet-cache/${walletName}`),
 }));
 
+const CACHE_ROOT = path.resolve(process.cwd(), "src/utils/wallets/tests/.test-wallet-cache");
+const CACHE_DIR = path.resolve(CACHE_ROOT, "petra");
+
+beforeAll(() => {
+    if (!fs.existsSync(CACHE_DIR)) {
+        fs.mkdirSync(CACHE_DIR, { recursive: true });
+        fs.writeFileSync(path.resolve(CACHE_DIR, "password.txt"), "test1234");
+    }
+});
+
+afterAll(() => {
+    fs.rmSync(CACHE_ROOT, { force: true, recursive: true });
+});
+
 describe("Get wallet password from cache", () => {
-    const CACHE_ROOT = path.resolve(process.cwd(), "src/utils/wallets/tests/.test-wallet-cache");
-    const CACHE_DIR = path.resolve(CACHE_ROOT, "petra");
-
-    beforeAll(() => {
-        if (!fs.existsSync(CACHE_DIR)) {
-            fs.mkdirSync(CACHE_DIR, { recursive: true });
-            fs.writeFileSync(path.resolve(CACHE_DIR, "password.txt"), "test1234");
-        }
-    });
-
-    afterAll(() => {
-        fs.rmSync(CACHE_ROOT, { force: true, recursive: true });
-    });
-
     afterEach(() => {
         vi.clearAllMocks();
     });

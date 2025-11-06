@@ -12,6 +12,10 @@ export default defineWalletSetup(
 
         await metamask.onboard({ mode: "import", password: PASSWORD, secretRecoveryPhrase: seedPhrase });
 
+        await metamask.lock();
+
+        await metamask.unlock();
+
         return void 0;
     },
     { slowMo: 1_500 },
