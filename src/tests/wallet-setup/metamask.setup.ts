@@ -8,5 +8,9 @@ export default defineWalletSetup(PASSWORD, async ({ walletPage }) => {
 
     const seedPhrase = "slam razor near morning edge across provide sting section bind soup differ";
 
-    await metamask.onboard({ mode: "import", password: PASSWORD, secretRecoveryPhrase: seedPhrase });
+    try {
+        await metamask.onboard({ mode: "import", password: PASSWORD, secretRecoveryPhrase: seedPhrase });
+    } catch (error) {
+        console.error("Error setting up Metamask: ", (error as Error).message);
+    }
 });

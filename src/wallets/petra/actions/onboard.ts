@@ -98,6 +98,50 @@ export default async function onboard({ page, mode, password, ...args }: Onboard
         await expect(page.locator(homepageSelectors.sendButton)).toBeVisible();
     }
 
+    if (mode === "importMnemonic") {
+        const mnemonicPhrase = "secretRecoveryPhrase" in args ? args.secretRecoveryPhrase.split(" ") : [];
+        const importMnemonicPhraseButton = page.locator(onboardSelectors.importUsingMnemonicButton);
+
+        await expect(importWalletButton).toBeVisible();
+        await importWalletButton.click();
+
+        await expect(importMnemonicPhraseButton).toBeVisible();
+        await importMnemonicPhraseButton.click();
+
+        await expect(page.getByText("Enter your Secret Recovery Phrase")).toBeVisible();
+
+        for (const [index, phrase] of mnemonicPhrase.entries()) {
+            const phraseInput = page.locator(
+                `input[name="mnemonic-${String.fromCharCode("a".charCodeAt(0) + index)}"]`,
+            );
+            await phraseInput.fill(phrase);
+        }
+
+        await expect(continueButton).toBeEnabled();
+        await continueButton.click();
+
+        await expect(createNewPasswordInput).toBeVisible();
+        await createNewPasswordInput.fill(password);
+
+        await expect(confirmNewPasswordInput).toBeVisible();
+        await confirmNewPasswordInput.fill(password);
+
+        await expect(confirmPasswordCheckbox).toBeVisible();
+        await confirmPasswordCheckbox.click();
+
+        await expect(continueButton).toBeEnabled();
+        await continueButton.click();
+
+        await expect(getStartedButton).toBeVisible();
+        await getStartedButton.click();
+
+        await expect(onboardingCompleteText).toBeVisible();
+        await page.goto(await petraProfile.indexUrl());
+
+        await expect(page.locator(homepageSelectors.depositButton)).toBeVisible();
+        await expect(page.locator(homepageSelectors.sendButton)).toBeVisible();
+    }
+
     await sleep(8_000);
     console.info(picocolors.greenBright("✨ MetaMask onboarding completed successfully"));
 }
