@@ -1,7 +1,6 @@
 import type { Page } from "playwright-core";
 import { lockWallet } from "./actions/lock";
 import onboard from "./actions/onboard";
-import { openSettings } from "./actions/open-settings";
 import { type RenameAccount, renameAccount } from "./actions/rename-account";
 import unlock from "./actions/unlock";
 import type { OnboardingArgs } from "./types";
@@ -15,7 +14,6 @@ export class Petra {
 
     async onboard(args: OnboardingArgs) {
         await onboard({ page: this.page, ...args });
-        return void 0;
     }
 
     async unlock() {
@@ -23,7 +21,6 @@ export class Petra {
     }
 
     async lock() {
-        await openSettings(this.page);
         await lockWallet(this.page);
     }
 

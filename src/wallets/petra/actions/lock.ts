@@ -1,12 +1,12 @@
 import { expect, type Page } from "@playwright/test";
-import { homepageSelectors } from "../selectors/homepage-selectors";
+import { openSettings } from "./open-settings";
 
 export async function lockWallet(page: Page) {
-    const unlockPageTitle = "unlock-page-title";
-    const lockButton = page.getByTestId(homepageSelectors.lockButton);
+    await openSettings(page);
 
-    await expect(lockButton).toBeVisible();
-    await lockButton.click();
+    const lockWalletButton = page.getByRole("button", { name: /lock wallet/i });
+    await lockWalletButton.click();
 
-    await expect(page.getByTestId(unlockPageTitle)).toBeVisible();
+    const unlockPageTitle = page.getByRole("heading", { name: /welcome/i });
+    await expect(unlockPageTitle).toBeVisible();
 }

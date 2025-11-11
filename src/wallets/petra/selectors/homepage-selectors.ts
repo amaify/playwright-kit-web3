@@ -2,7 +2,6 @@ export const homepageSelectors = {
     depositButton: "button:has-text('Deposit')",
     sendButton: "button:has-text('Send')",
     receiveButton: "button:has-text('Receive')",
-    openSettingsButton: "account-options-menu-button",
     settingsMenu: "button[aria-label='Settings']",
     lockButton: "global-menu-lock",
     accountMenuButton: "button[data-part='trigger']",
