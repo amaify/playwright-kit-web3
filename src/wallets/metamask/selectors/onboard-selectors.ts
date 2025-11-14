@@ -15,4 +15,6 @@ export const onboardSelectors = {
     importUsingSecretRecoveryPhraseButton: "onboarding-import-with-srp-button",
     secretRecoveryPhraseTextAreaInput: "srp-input-import__srp-note",
     importWalletConfirmButton: "import-srp-confirm",
+    importAccountConfirmButton: "import-account-confirm-button",
+    importSRPError: "bannerAlert",
 };

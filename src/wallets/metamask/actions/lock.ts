@@ -1,9 +1,9 @@
 import { expect, type Page } from "@playwright/test";
-import { homepageSelectors } from "../selectors/homepage-selectors";
+import { settingsSelectors } from "../selectors/homepage-selectors";
 
 export async function lockWallet(page: Page) {
     const unlockPageTitle = "unlock-page-title";
-    const lockButton = page.getByTestId(homepageSelectors.lockButton);
+    const lockButton = page.getByTestId(settingsSelectors.lockButton);
 
     await expect(lockButton).toBeVisible();
     await lockButton.click();

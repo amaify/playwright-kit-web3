@@ -4,11 +4,11 @@ import { accountSelectors, homepageSelectors } from "../selectors/homepage-selec
 
 export type RenameAccount = {
     page: Page;
-    oldAccountName: string;
+    currentAccountName: string;
     newAccountName: string;
 };
 
-export async function renameAccount({ page, oldAccountName, newAccountName }: RenameAccount) {
+export async function renameAccount({ page, currentAccountName, newAccountName }: RenameAccount) {
     const accountMenuButton = page.getByTestId(homepageSelectors.accountMenuButton);
     const accountMenuTextContent = await accountMenuButton.textContent();
 
@@ -24,9 +24,11 @@ export async function renameAccount({ page, oldAccountName, newAccountName }: Re
     const addAccountButtonLoading = page.getByTestId(accountSelectors.addMultichainAccountButton);
     const startTextContent = await addAccountButtonLoading.textContent();
 
-    await expect
-        .poll(async () => (await addAccountButtonLoading.textContent())?.trim() ?? "", { timeout: 60_000 })
-        .not.toBe(startTextContent);
+    if (startTextContent?.includes("Syncing")) {
+        await expect
+            .poll(async () => (await addAccountButtonLoading.textContent())?.trim() ?? "", { timeout: 60_000 })
+            .not.toBe(startTextContent);
+    }
 
     const accountCells = await page.getByTestId(/^multichain-account-cell-entropy:/).all();
     let currentAccount: Locator | null = null;
@@ -34,14 +36,14 @@ export async function renameAccount({ page, oldAccountName, newAccountName }: Re
     for (const accountCell of accountCells) {
         const textContent = await accountCell.textContent();
 
-        if (textContent?.includes(oldAccountName)) {
+        if (textContent?.includes(currentAccountName)) {
             currentAccount = accountCell;
             break;
         }
     }
 
     if (!currentAccount) {
-        skip(!currentAccount, `Account with name "${oldAccountName}" not found.`);
+        skip(!currentAccount, `Account with name "${currentAccountName}" not found.`);
     }
 
     const currentAccountText = await currentAccount?.textContent();
@@ -49,11 +51,11 @@ export async function renameAccount({ page, oldAccountName, newAccountName }: Re
     if (currentAccountText?.split("$")[0] === newAccountName) {
         skip(
             currentAccountText?.split("$")[0] === newAccountName,
-            `The new account name "${newAccountName}" is the same as the old account name "${oldAccountName}".`,
+            `The new account name "${newAccountName}" is the same as the old account name "${currentAccountName}".`,
         );
     }
 
-    const optionsButton = page.locator(`div[aria-label='${oldAccountName} options']`);
+    const optionsButton = page.locator(`div[aria-label='${currentAccountName} options']`);
 
     await expect(optionsButton).toBeVisible();
     await optionsButton.click();
@@ -85,6 +87,6 @@ export async function renameAccount({ page, oldAccountName, newAccountName }: Re
         }
     }
 
-    const backButton = page.locator("button[aria-label='Back']");
+    const backButton = page.locator("button[aria-label='Back']").nth(1);
     await backButton.click();
 }

@@ -8,3 +8,8 @@ export type OnboardingArgs =
           password: string;
           secretRecoveryPhrase: string;
       };
+
+export type AddAccountArgs = {
+    privateKey: string;
+    accountName: string;
+};

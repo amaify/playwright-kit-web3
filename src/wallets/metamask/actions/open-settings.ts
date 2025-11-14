@@ -1,5 +1,5 @@
 import { expect, type Page } from "@playwright/test";
-import { homepageSelectors } from "../selectors/homepage-selectors";
+import { homepageSelectors, settingsSelectors } from "../selectors/homepage-selectors";
 
 export async function openSettings(page: Page) {
     const settingsButton = page.getByTestId(homepageSelectors.openSettingsButton);
@@ -7,5 +7,5 @@ export async function openSettings(page: Page) {
     await expect(settingsButton).toBeVisible();
     await settingsButton.click();
 
-    await expect(page.getByTestId(homepageSelectors.settingsMenu)).toBeVisible();
+    await expect(page.getByTestId(settingsSelectors.settingsMenu)).toBeVisible();
 }

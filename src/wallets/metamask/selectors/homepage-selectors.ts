@@ -4,10 +4,14 @@ export const homepageSelectors = {
     sendButton: "eth-overview-send",
     receiveButton: "eth-overview-receive",
     openSettingsButton: "account-options-menu-button",
-    settingsMenu: "global-menu",
-    lockButton: "global-menu-lock",
     accountMenuButton: "account-menu-icon",
     accountCell: "multichain-account-cell-entropy",
+};
+
+export const settingsSelectors = {
+    settingsMenu: "global-menu",
+    lockButton: "global-menu-lock",
+    networksButton: "global-menu-networks",
 };
 
 export const unlockWalletSelectors = {
@@ -24,4 +28,7 @@ export const accountSelectors = {
     hideAccountLabel: "Hide account",
     backButton: "back",
     addMultichainAccountButton: "add-multichain-account-button",
+    addWalletButton: "account-list-add-wallet-button",
+    importWalletButton: "add-wallet-modal-import-wallet",
+    importAccountButton: "add-wallet-modal-import-account",
 };

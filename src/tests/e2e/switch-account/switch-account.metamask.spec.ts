@@ -4,17 +4,16 @@ import { homepageSelectors } from "@/wallets/metamask/selectors/homepage-selecto
 
 const test = testWithMetamaskFixture;
 
-test.describe("Rename account E2E tests", () => {
-    test("Should rename account successfully", async ({ metamask, metamaskPage }) => {
-        const OLD_ACCOUNT = "Latest account";
-        const NEW_ACCOUNT = "New account";
+test.describe("Switch account E2E tests", () => {
+    test("Should switch account successfully", async ({ metamask, metamaskPage }) => {
+        const ACCOUNT_NAME = "Account 2";
 
-        await metamask.renameAccount({ currentAccountName: OLD_ACCOUNT, newAccountName: NEW_ACCOUNT });
+        await metamask.switchAccount({ accountName: ACCOUNT_NAME });
 
         const accountMenuButton = metamaskPage.getByTestId(homepageSelectors.accountMenuButton);
 
         await expect(metamaskPage.getByTestId("app-header-logo").first()).toBeVisible();
         await expect(accountMenuButton).toBeVisible();
-        await expect(accountMenuButton).toContainText(NEW_ACCOUNT);
+        await expect(accountMenuButton).toContainText(ACCOUNT_NAME);
     });
 });
