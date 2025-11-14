@@ -18,6 +18,7 @@ export async function toggleShowTestnetNetwork({ page }: { page: Page }) {
     );
     await showTestnetNetworkToggle.locator("label[class='toggle-button toggle-button--off']").click();
 
+    await page.getByTestId("Sepolia").scrollIntoViewIfNeeded();
     await expect(page.getByTestId("Sepolia")).toBeVisible();
 
     const closeButton = netowrksDialog.getByRole("button", { name: /close/i });
